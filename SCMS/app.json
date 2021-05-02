@@ -1,0 +1,12 @@
+{
+  "name": "SCMS",
+  "displayName": "SCMS",
+  "expo": {
+    "name": "SCMS",
+    "slug": "SCMS",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
