@@ -1,13 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import Main from './Screens/Main'
+import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+const theme = {
+  ...DarkTheme,
+  roundness: 2,
+  colors: {
+    ...DarkTheme.colors,
+    primary: 'rgb(223,98,51)',
+    accent: 'rgb(220,75,99)',
+  },
+};
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={theme}>
+      <Main />
+    </PaperProvider>
   );
 }
 
