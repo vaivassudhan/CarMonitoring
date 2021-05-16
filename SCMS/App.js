@@ -3,6 +3,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Main from './Screens/Main'
 import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import RootStackScreen from './components/Navigation/RootStackScreen';
+import { NavigationContainer, DefaultTheme as NavigationDefaultTheme,
+  DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
 const theme = {
   ...DarkTheme,
   roundness: 2,
@@ -15,7 +18,9 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <Main />
+       <NavigationContainer theme={theme}>
+        <RootStackScreen/>
+      </NavigationContainer>
     </PaperProvider>
   );
 }
