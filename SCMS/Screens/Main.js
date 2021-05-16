@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Image,SafeAreaView, TextInput,ScrollView , } from 'react-native';
 
 import { Badge } from 'react-native-paper';
@@ -9,11 +9,24 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { color } from 'react-native-reanimated';
 export default function Demo(props) {
   const { colors } = useTheme();
+  useEffect(()=>{
+    global.car='';
+    fetch('https://scms-33eae-default-rtdb.firebaseio.com/scms-33eae-default-rtdb.json')
+    .then((response) => response.json())
+    .then((json) => {
+      global.car=json.Car['-M_ElJUj2wV6MB9xW8u8']
+      console.log(global.car);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  },[]);
   return (
+    
     <SafeAreaView style={styles.container}>
         <View style={styles.headview}>
             <Image style={styles.logo} source={require('../assets/Hyundai-Logo-1990.png')}/>
-            <Text style={styles.head}>Hyundai Verna</Text>
+            <Text style={styles.head}>{global.car["Name"]}</Text>
         </View>
         <View
         style={{
@@ -28,7 +41,7 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
                 <Text style={styles.cardtext2}>Fuel Level  </Text>
-                <Title style={styles.cardvalue}>__</Title>
+                <Title style={styles.cardvalue}>{global.car["Fuel"]}</Title>
                 <Paragraph  style={{marginTop:20}}> %</Paragraph>
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
@@ -41,7 +54,7 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/> 
                 <Text style={styles.cardtext3}>Speed   </Text>
-                <Title style={styles.cardvalue}>__</Title>
+                <Title style={styles.cardvalue}>{global.car["Speed"]}</Title>
                 <Paragraph  style={{marginTop:20}}> km/hr</Paragraph>
             </Card.Content>
             
@@ -99,7 +112,7 @@ export default function Demo(props) {
             {/* RPM */}
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
               <Text style={styles.engineData}>RPM</Text>
-                <Title style={styles.enginevalue}>3000 </Title>
+                <Title style={styles.enginevalue}>{global.car["RPM"]} </Title>
                 <Paragraph  style={{marginTop:20}}></Paragraph>
             </Card.Content>
             {/* RPM */}
