@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Image,SafeAreaView, TextInput,ScrollView , } from 'react-native';
 
+import * as firebase from 'firebase';
 import { Badge } from 'react-native-paper';
 import { Button } from 'react-native-paper';
 import {Text,useTheme} from 'react-native-paper'
@@ -9,24 +10,32 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { color } from 'react-native-reanimated';
 export default function Demo(props) {
   const { colors } = useTheme();
+ 
   useEffect(()=>{
-    global.car='';
-    fetch('https://scms-33eae-default-rtdb.firebaseio.com/scms-33eae-default-rtdb.json')
-    .then((response) => response.json())
-    .then((json) => {
-      global.car=json.Car['-M_ElJUj2wV6MB9xW8u8']
-      console.log(global.car);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGFUMmN8dWXfW8Xf1PPYY9KWheRfxtOdo",
+      authDomain: "scms-33eae.firebaseapp.com",
+      databaseURL: "https://scms-33eae-default-rtdb.firebaseio.com",
+      projectId: "scms-33eae",
+      storageBucket: "scms-33eae.appspot.com",
+      messagingSenderId: "895253006521",
+      appId: "1:895253006521:web:81863c9bb7ab70fc793368",
+      measurementId: "G-PHQL139GZ2"
+    };
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
+    this.itemsRef = firebaseApp.database();
+    this.itemsRef.ref('/scms-33eae-default-rtdb').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let cardata = {...data};
+      console.log(cardata)
+    });
   },[]);
   return (
     
     <SafeAreaView style={styles.container}>
         <View style={styles.headview}>
             <Image style={styles.logo} source={require('../assets/Hyundai-Logo-1990.png')}/>
-            <Text style={styles.head}>{global.car["Name"]}</Text>
+            <Text style={styles.head}>sgs</Text>
         </View>
         <View
         style={{
@@ -41,7 +50,7 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
                 <Text style={styles.cardtext2}>Fuel Level  </Text>
-                <Title style={styles.cardvalue}>{global.car["Fuel"]}</Title>
+                <Title style={styles.cardvalue}>sf</Title>
                 <Paragraph  style={{marginTop:20}}> %</Paragraph>
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
@@ -54,7 +63,7 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/> 
                 <Text style={styles.cardtext3}>Speed   </Text>
-                <Title style={styles.cardvalue}>{global.car["Speed"]}</Title>
+                <Title style={styles.cardvalue}>ffs</Title>
                 <Paragraph  style={{marginTop:20}}> km/hr</Paragraph>
             </Card.Content>
             
@@ -112,7 +121,7 @@ export default function Demo(props) {
             {/* RPM */}
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
               <Text style={styles.engineData}>RPM</Text>
-                <Title style={styles.enginevalue}>{global.car["RPM"]} </Title>
+                <Title style={styles.enginevalue}>sfg </Title>
                 <Paragraph  style={{marginTop:20}}></Paragraph>
             </Card.Content>
             {/* RPM */}
