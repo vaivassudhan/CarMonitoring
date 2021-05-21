@@ -23,9 +23,15 @@ def updateTorque(value):
 def updateTemp(value):
     fb.put(jsonlink,"Temp",value)
     print("Temp : ",value)
-
+def updateKmph(value):
+    value=value*0.425
+    value=round(value,2)
+    fb.put(jsonlink,"fuelEfficiency",value)
+    print("fuelEfficiency : ",value)
 for i in range(0,6):
-    updateSpeed(i)
+    updateSpeed(i+10)
     updateRPM((i+3)*100)
-    time.sleep(0.5)
     updateTemp(i+100)
+    updateKmph(i+40)
+    updateFuel(100-(i*0.01))
+    # time.sleep(0.1)
