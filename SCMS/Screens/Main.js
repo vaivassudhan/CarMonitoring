@@ -1,41 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image,SafeAreaView, TextInput,ScrollView , } from 'react-native';
 
-import * as firebase from 'firebase';
+import {db} from '../config/fireconfig';
 import { Badge } from 'react-native-paper';
 import { Button } from 'react-native-paper';
 import {Text,useTheme} from 'react-native-paper'
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { color } from 'react-native-reanimated';
 export default function Demo(props) {
+  
   const { colors } = useTheme();
- 
+
+  const [cardata,setcardata]=useState('')
   useEffect(()=>{
-    const firebaseConfig = {
-      apiKey: "AIzaSyAGFUMmN8dWXfW8Xf1PPYY9KWheRfxtOdo",
-      authDomain: "scms-33eae.firebaseapp.com",
-      databaseURL: "https://scms-33eae-default-rtdb.firebaseio.com",
-      projectId: "scms-33eae",
-      storageBucket: "scms-33eae.appspot.com",
-      messagingSenderId: "895253006521",
-      appId: "1:895253006521:web:81863c9bb7ab70fc793368",
-      measurementId: "G-PHQL139GZ2"
-    };
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
-    this.itemsRef = firebaseApp.database();
-    this.itemsRef.ref('/scms-33eae-default-rtdb').on('value', querySnapShot => {
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyAGFUMmN8dWXfW8Xf1PPYY9KWheRfxtOdo",
+    //   authDomain: "scms-33eae.firebaseapp.com",
+    //   databaseURL: "https://scms-33eae-default-rtdb.firebaseio.com",
+    //   projectId: "scms-33eae",
+    //   storageBucket: "scms-33eae.appspot.com",
+    //   messagingSenderId: "895253006521",
+    //   appId: "1:895253006521:web:81863c9bb7ab70fc793368",
+    //   measurementId: "G-PHQL139GZ2"
+    // };
+    // const firebaseApp = firebase.initializeApp(firebaseConfig);
+    // this.itemsRef = firebaseApp.database();
+    db.ref('/scms-33eae-default-rtdb/Car/').on('value', querySnapShot => {
       let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let cardata = {...data};
-      console.log(cardata)
+      let cdata = {...data};
+      cdata=cdata["-M_ElJUj2wV6MB9xW8u8"]
+      setcardata(cdata)
+      console.log("cardata",cardata)
     });
+    
   },[]);
   return (
     
     <SafeAreaView style={styles.container}>
         <View style={styles.headview}>
             <Image style={styles.logo} source={require('../assets/Hyundai-Logo-1990.png')}/>
-            <Text style={styles.head}>sgs</Text>
+            <Text style={styles.head}>{cardata["Name"]}</Text>
         </View>
         <View
         style={{
@@ -50,7 +55,7 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
                 <Text style={styles.cardtext2}>Fuel Level  </Text>
-                <Title style={styles.cardvalue}>sf</Title>
+                <Title style={styles.cardvalue}>{cardata["Fuel"]}</Title>
                 <Paragraph  style={{marginTop:20}}> %</Paragraph>
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
@@ -63,22 +68,60 @@ export default function Demo(props) {
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/> 
                 <Text style={styles.cardtext3}>Speed   </Text>
-                <Title style={styles.cardvalue}>ffs</Title>
+                <Title style={styles.cardvalue}>{cardata["Speed"]}</Title>
                 <Paragraph  style={{marginTop:20}}> km/hr</Paragraph>
             </Card.Content>
             
         </Card>
 
 
+       
+        <Card style={styles.cardstyle}>
+            <Card.Content style={{flexDirection:'row'}}>
+                <Image style={styles.cardlogo3} source={require('../assets/fuelrange.png')}/> 
+                <Text style={styles.cardtext2}>Fuel Range   </Text>
+                <Title style={styles.cardvalue}>{cardata["Range"]}</Title>
+                <Paragraph  style={{marginTop:20}}> Km</Paragraph>
+            </Card.Content>
+            
+        </Card>
+
         <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo2} source={require('../assets/thermometer.png')}/> 
                 <Text style={styles.cardtext}>Temperature   </Text>
-                <Title style={styles.cardvalue}>__</Title>
+                <Title style={styles.cardvalue}>{cardata["Temp"]}</Title>
                 <Paragraph  style={{marginTop:20}}> C</Paragraph>
             </Card.Content>
             
         </Card>
+
+        <Text style={[styles.head,{marginLeft:12,marginTop:45}]}>Engine Specific Data</Text>
+        <Card style={styles.cardstyle}>
+            <Card.Content style={{flexDirection:'row'}}>
+                <Image style={styles.cardlogo} source={require('../assets/engine.png')}/> 
+                <Text style={styles.cardtext}>Engine Data</Text>
+            </Card.Content>
+            {/* RPM */}
+            <Card.Content style={{flexDirection:'row',marginLeft:20}}>
+              <Text style={styles.engineData}>RPM</Text>
+                <Title style={styles.enginevalue}> {cardata["RPM"]}</Title>
+                <Paragraph  style={{marginTop:20}}></Paragraph>
+            </Card.Content>
+            {/* RPM */}
+            <Card.Content style={{flexDirection:'row',marginLeft:20}}>
+              <Text style={styles.engineData}>Torque</Text>
+                <Title style={styles.enginevalue}>___ </Title>
+                <Paragraph  style={{marginTop:20}}></Paragraph>
+            </Card.Content>
+        </Card>
+        <View
+        style={{
+            borderBottomColor: 'white',
+            borderBottomWidth: 1,
+            marginTop:20
+        }}
+        />
         <Card style={styles.cardstyle}>
             <Card.Content>
               <View style={{flex:1,flexDirection:'row'}}>
@@ -101,8 +144,8 @@ export default function Demo(props) {
                 <Text style={[styles.cardtext,{marginLeft:10,marginTop:4}]}>Check Engine </Text>
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
-                <Title style={styles.cardvalue}>List if any problems here</Title>
-                
+                <Title style={styles.cardvalue}>{cardata["checkEngine"]}</Title>
+                {/* <Image style={styles.cardlogo2} source={require('../assets/enginegood.png')}/>  */}
             </Card.Content>
         </Card>
         <View
@@ -112,32 +155,7 @@ export default function Demo(props) {
             marginTop:20
         }}
         />
-        <Text style={[styles.head,{marginLeft:12,marginTop:45}]}>Addition Data</Text>
-        <Card style={styles.cardstyle}>
-            <Card.Content style={{flexDirection:'row'}}>
-                <Image style={styles.cardlogo} source={require('../assets/engine.png')}/> 
-                <Text style={styles.cardtext}>Engine Data</Text>
-            </Card.Content>
-            {/* RPM */}
-            <Card.Content style={{flexDirection:'row',marginLeft:20}}>
-              <Text style={styles.engineData}>RPM</Text>
-                <Title style={styles.enginevalue}>sfg </Title>
-                <Paragraph  style={{marginTop:20}}></Paragraph>
-            </Card.Content>
-            {/* RPM */}
-            <Card.Content style={{flexDirection:'row',marginLeft:20}}>
-              <Text style={styles.engineData}>Torque</Text>
-                <Title style={styles.enginevalue}>___ </Title>
-                <Paragraph  style={{marginTop:20}}></Paragraph>
-            </Card.Content>
-        </Card>
-        <View
-        style={{
-            borderBottomColor: 'white',
-            borderBottomWidth: 1,
-            marginTop:20
-        }}
-        />
+        
         <Text style={[styles.head,{marginLeft:12,marginTop:45}]}>Built by Senthil sivaraman</Text>
         {/* <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
@@ -196,6 +214,11 @@ const styles = StyleSheet.create({
     width: 50,
     height:50,
     marginRight:5
+  },
+  cardlogo3:{
+    width: 45,
+    height:45,
+    marginRight:10
   },
   head: {
       marginTop:0,

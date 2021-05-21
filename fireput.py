@@ -17,6 +17,13 @@ def updateTemp(value):
     fb.put(jsonlink,"Temp",value)
     print("Temp : ",value)
 
+def updateTorque(value):
+    fb.put(jsonlink,"Torque",value)
+    print("Torque : ",value)
+def updateTemp(value):
+    fb.put(jsonlink,"Temp",value)
+    print("Temp : ",value)
+
 for i in range(0,6):
     updateSpeed(i)
     updateRPM((i+3)*100)
