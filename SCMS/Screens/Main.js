@@ -55,7 +55,7 @@ export default function Demo(props) {
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
                 <Text style={[styles.cardtext,{color:lightBlue}]}>Fuel Level  </Text>
                 <Title style={styles.cardvalue}>{cardata["Fuel"]}</Title>
-                <Paragraph  style={{marginTop:20}}> %</Paragraph>
+                <Paragraph  style={{marginTop:18}}> %</Paragraph>
                 
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
@@ -69,7 +69,7 @@ export default function Demo(props) {
                 <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/> 
                 <Text style={[styles.cardtext,{color:green}]}>Speed   </Text>
                 <Title style={styles.cardvalue}>{cardata["Speed"]}</Title>
-                <Paragraph  style={{marginTop:20}}> km/hr</Paragraph>
+                <Paragraph  style={{marginTop:18}}> km/hr</Paragraph>
             </Card.Content>
             
         </Card>
@@ -81,7 +81,7 @@ export default function Demo(props) {
                 <Image style={styles.cardlogo3} source={require('../assets/fuelrange.png')}/> 
                 <Text style={[styles.cardtext,{color:orange}]}>Fuel Range   </Text>
                 <Title style={styles.cardvalue}>{cardata["Range"]}</Title>
-                <Paragraph  style={{marginTop:20}}> Km</Paragraph>
+                <Paragraph  style={{marginTop:18}}> Km</Paragraph>
             </Card.Content>
             
         </Card>
@@ -90,7 +90,7 @@ export default function Demo(props) {
                 <Image style={styles.cardlogo3} source={require('../assets/fuelef.png')}/> 
                 <Text style={[styles.cardtext,{color:lightBlue}]}>Efficiency   </Text>
                 <Title style={styles.cardvalue}>{cardata["fuelEfficiency"]}</Title>
-                <Paragraph  style={{marginTop:20}}> Km/L</Paragraph>
+                <Paragraph  style={{marginTop:18}}> Km/L</Paragraph>
             </Card.Content>
             
         </Card>
@@ -100,7 +100,7 @@ export default function Demo(props) {
                 <Image style={styles.cardlogo2} source={require('../assets/thermometer.png')}/> 
                 <Text style={[styles.cardtext,{color:orange}]}>Temperature   </Text>
                 <Title style={styles.cardvalue}>{cardata["Temp"]}&deg;</Title>
-                <Paragraph  style={{marginTop:20}}>C</Paragraph>
+                <Paragraph  style={{marginTop:18}}>C</Paragraph>
             </Card.Content>
             
         </Card>
@@ -122,7 +122,7 @@ export default function Demo(props) {
                 }}
                 
               >
-               <Marker coordinate={{ latitude: 11.5696231, longitude: 78.0329787 }} />
+               <Marker coordinate={{ latitude: cardata["latitude"], longitude: cardata["longitude"] }} />
                 </MapView>
               </View>
             </Card.Content>
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
 
   cardvalue:{
     color:'white',
-    marginTop:12,
+    marginTop:10,
   },
   locationimg:{
     width:330,
