@@ -16,20 +16,28 @@ export default function Demo(props) {
 
   const [cardata,setcardata]=useState('')
   const [loading,setloading]=useState(true)
+
   useEffect(()=>{
+
     db.ref('/scms-33eae-default-rtdb/Car/').on('value', querySnapShot => {
       let data = querySnapShot.val() ? querySnapShot.val() : {};
       let cdata = {...data};
       cdata=cdata["-M_ElJUj2wV6MB9xW8u8"]
       setcardata(cdata)
       console.log("cardata",cardata)
+      setloading(false)
     });
     
   },[]);
   return (
     
     <SafeAreaView style={styles.container}>
-      <ActivityIndicator />
+      
+      {loading ?
+      <View style={[styles.container_load,styles.horizontal_load]}>
+          <ActivityIndicator size ="large" color="#009387" />
+      </View> :
+      <View>
         <View style={styles.headview}>
             <Image style={styles.logo} source={require('../assets/Hyundai-Logo-1990.png')}/>
             <Text style={styles.head}>{cardata["Name"]}</Text>
@@ -51,7 +59,7 @@ export default function Demo(props) {
                 
             </Card.Content>
             <Card.Content style={{flexDirection:'row',marginLeft:20}}>
-            {/* <Progress.Bar progress={cardata["Fuel"]/100} width={250} color={lightBlue} height={5} marginLeft={'10%'} marginTop={'7%'} /> */}
+            <Progress.Bar progress={cardata["Fuel"]/100} width={250} color={lightBlue} height={5} marginLeft={'10%'} marginTop={'7%'} />
             </Card.Content>
                 
         </Card>
@@ -190,6 +198,8 @@ export default function Demo(props) {
 
     </View>
     </ScrollView>
+    </View>
+      }
     </SafeAreaView>
   );
 }
@@ -214,6 +224,14 @@ const styles = StyleSheet.create({
     height:50,
     marginRight:8
   },
+  container_load:{
+    justifyContent:'center'
+  },
+  horizontal_load:{
+    flexDirection:"row",
+    justifyContent:"space-around",
+    padding:10
+  },  
   cardlogo2:{
     width: 50,
     height:50,
