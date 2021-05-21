@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image,SafeAreaView, TextInput,ScrollView , } from 'react-native';
+import { StyleSheet, View, Image,SafeAreaView,ActivityIndicator, TextInput,ScrollView , } from 'react-native';
 
 import {db} from '../config/fireconfig';
 import {Text,useTheme} from 'react-native-paper'
@@ -15,6 +15,7 @@ export default function Demo(props) {
   const { colors } = useTheme();
 
   const [cardata,setcardata]=useState('')
+  const [loading,setloading]=useState(true)
   useEffect(()=>{
     db.ref('/scms-33eae-default-rtdb/Car/').on('value', querySnapShot => {
       let data = querySnapShot.val() ? querySnapShot.val() : {};
@@ -28,6 +29,7 @@ export default function Demo(props) {
   return (
     
     <SafeAreaView style={styles.container}>
+      <ActivityIndicator />
         <View style={styles.headview}>
             <Image style={styles.logo} source={require('../assets/Hyundai-Logo-1990.png')}/>
             <Text style={styles.head}>{cardata["Name"]}</Text>
