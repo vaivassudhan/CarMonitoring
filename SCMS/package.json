@@ -27,6 +27,8 @@
     "react-native-progress": "^4.1.2",
     "react-native-reanimated": "~2.1.0",
     "react-native-screens": "~3.0.0",
+    "react-native-speedometer": "^1.0.5",
+    "react-native-speedometer-chart": "^0.7.5",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
     "react-progressbar": "^15.4.1"

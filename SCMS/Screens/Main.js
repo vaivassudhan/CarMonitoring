@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image,SafeAreaView,ActivityIndicator, TextInput,ScrollView , } from 'react-native';
-
+import Speedometer from 'react-native-speedometer-chart';
 import {db} from '../config/fireconfig';
 import {Text,useTheme} from 'react-native-paper'
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
@@ -66,7 +66,8 @@ export default function Demo(props) {
 
         <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
-                <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/> 
+                <Speedometer value={cardata["Speed"]} style={{marginRight:15,marginTop:5}} totalValue={180} size={60} showIndicator innerColor='rgb(30,30,30)'/>
+                {/* <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/>  */}
                 <Text style={[styles.cardtext,{color:green}]}>Speed   </Text>
                 <Title style={styles.cardvalue}>{cardata["Speed"]}</Title>
                 <Paragraph  style={{marginTop:18}}> km/hr</Paragraph>
