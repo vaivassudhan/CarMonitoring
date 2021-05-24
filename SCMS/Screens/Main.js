@@ -49,7 +49,7 @@ export default function Demo(props) {
         }}
         />
       <ScrollView>
-    <View>
+    <View style={{marginBottom:45}}>
         <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
@@ -186,7 +186,7 @@ export default function Demo(props) {
         
 
        
-        <Card style={styles.cardstyle}>
+        {/* <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
                 <Image style={styles.cardlogo} source={require('../assets/fuel.png')}/> 
                 
@@ -195,7 +195,7 @@ export default function Demo(props) {
                
             </Card.Content>
                 
-        </Card>
+        </Card> */}
 
     </View>
     </ScrollView>
