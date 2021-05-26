@@ -28,10 +28,17 @@ def updateKmph(value):
     value=round(value,2)
     fb.put(jsonlink,"fuelEfficiency",value)
     print("fuelEfficiency : ",value)
-for i in range(0,6):
-    updateSpeed(i+10)
-    updateRPM((i+3)*100)
-    updateTemp(i+100)
-    updateKmph(i+40)
-    updateFuel(100-(i*0.01))
-    # time.sleep(0.1)
+# for i in range(0,6):
+#     updateSpeed(i+10)
+#     updateRPM((i+3)*100)
+#     updateTemp(i+100)
+#     updateKmph(i+40)
+#     updateFuel(100-(i*0.01))
+
+checkengine={
+    'battery':False,
+    'engine':False,
+    'oil':False,
+    'temp':False
+}
+fb.put(jsonlink,"checkEngine",checkengine)

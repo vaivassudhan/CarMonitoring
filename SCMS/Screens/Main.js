@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image,SafeAreaView,ActivityIndicator, TextInput,ScrollView , } from 'react-native';
+import { StyleSheet, View, Image,SafeAreaView,ActivityIndicator, TextInput,ScrollView, TouchableOpacity , } from 'react-native';
 import Speedometer from 'react-native-speedometer-chart';
 import {db} from '../config/fireconfig';
 import {Text,useTheme} from 'react-native-paper'
@@ -7,7 +7,8 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { color } from 'react-native-reanimated';
 import MapView  , { Marker } from 'react-native-maps';
 import * as Progress from 'react-native-progress';
-export default function Demo(props) {
+import {FontAwesome} from 'react-native-vector-icons';
+export default function Demo({navigation}) {
   const lightBlue="rgb(88,178,177)"
   const green="rgb(85,177,94)"
   const orange="rgb(223,98,51)"
@@ -66,7 +67,7 @@ export default function Demo(props) {
 
         <Card style={styles.cardstyle}>
             <Card.Content style={{flexDirection:'row'}}>
-                <Speedometer value={cardata["Speed"]} style={{marginRight:15,marginTop:5}} totalValue={180} size={60} showIndicator innerColor='rgb(30,30,30)'/>
+                <Speedometer value={cardata["Speed"]} style={{marginRight:15,marginTop:5}} totalValue={180} size={45} showIndicator innerColor='rgb(30,30,30)'/>
                 {/* <Image style={styles.cardlogo} source={require('../assets/speedometer.png')}/>  */}
                 <Text style={[styles.cardtext,{color:green}]}>Speed   </Text>
                 <Title style={styles.cardvalue}>{cardata["Speed"]}</Title>
@@ -118,12 +119,14 @@ export default function Demo(props) {
                 initialRegion={{
                   latitude: 11.5696231,
                   longitude: 78.0329787,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
+                  latitudeDelta: 0.00922,
+                  longitudeDelta: 0.00421,
                 }}
                 
               >
-               <Marker coordinate={{ latitude: cardata["latitude"], longitude: cardata["longitude"] }} />
+               <Marker coordinate={{ latitude: cardata["latitude"], longitude: cardata["longitude"] }} >
+                <Image source={require('../assets/carmark.png')} style={{height: 40, width:40 }} />
+               </Marker>
                 </MapView>
               </View>
             </Card.Content>
@@ -131,14 +134,13 @@ export default function Demo(props) {
             </Card.Content>
         </Card>
         <Card style={styles.cardstyle}>
+          <TouchableOpacity onPress={()=>navigation.navigate('checkEngine')}>
             <Card.Content style={{flexDirection:'row'}}>
-                <Image style={styles.cardlogo} source={require('../assets/check.png')}/> 
-                <Text style={[styles.cardtext,{marginLeft:10,marginTop:4}]}>Check Engine </Text>
+                <Image style={[styles.cardlogo,{marginTop:8,marginBottom:-4}]} source={require('../assets/check.png')}/> 
+                <Text style={[styles.cardtext,{marginLeft:10,marginTop:14,width:'60%'}]}>Check Engine </Text>
+                <FontAwesome name = 'angle-right' style={{marginTop:10,marginLeft:18}} size ={30} color='white' />
             </Card.Content>
-            <Card.Content style={{flexDirection:'row',marginLeft:20}}>
-                <Title style={styles.cardvalue}>{cardata["checkEngine"]}</Title>
-                {/* <Image style={styles.cardlogo2} source={require('../assets/enginegood.png')}/>  */}
-            </Card.Content>
+            </TouchableOpacity>
         </Card>
         <View
         style={{
