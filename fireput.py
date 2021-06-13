@@ -1,4 +1,6 @@
 import time
+import obd
+import random
 from firebase import firebase
 fb = firebase.FirebaseApplication('https://scms-33eae-default-rtdb.firebaseio.com/', None)
 jsonlink="scms-33eae-default-rtdb/Car/-M_ElJUj2wV6MB9xW8u8"
@@ -28,17 +30,18 @@ def updateKmph(value):
     value=round(value,2)
     fb.put(jsonlink,"fuelEfficiency",value)
     print("fuelEfficiency : ",value)
-# for i in range(0,6):
-#     updateSpeed(i+10)
-#     updateRPM((i+3)*100)
-#     updateTemp(i+100)
-#     updateKmph(i+40)
-#     updateFuel(100-(i*0.01))
 
-checkengine={
-    'battery':False,
-    'engine':False,
-    'oil':False,
-    'temp':False
-}
-fb.put(jsonlink,"checkEngine",checkengine)
+while True:
+    connection = obd.OBD()
+    cmd = obd.commands.RPM
+    response = connection.query(cmd) 
+    # print(response.value)
+    rpm=str(response.value)
+    rpm=rpm.split()[0]
+    i=random.randint(1, 7)
+    print("RPM : ",rpm)
+    print("Speed : ",0)
+    print("Coolant Temp : ",62+i)
+    updateRPM(rpm)
+    updateSpeed(0)
+    updateTemp(62+i)
